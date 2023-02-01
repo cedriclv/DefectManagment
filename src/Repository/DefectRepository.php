@@ -16,6 +16,15 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class DefectRepository extends ServiceEntityRepository
 {
+    public function findDefectsPerCount(): array
+    {
+        return $this->createQueryBuilder('defect')
+            ->select('c.date, count(defect) AS defectNumber')
+            ->leftJoin('defect.count', 'c')
+            ->groupBy('c.date')
+            ->getQuery()
+            ->getResult();
+    }
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Defect::class);

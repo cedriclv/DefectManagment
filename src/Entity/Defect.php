@@ -32,7 +32,7 @@ class Defect
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $attachment_link = null;
 
-    #[ORM\ManyToOne(inversedBy: 'defects')]
+    #[ORM\ManyToOne(inversedBy: 'defects', fetch : 'EAGER')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Count $count = null;
 

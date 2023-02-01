@@ -30,9 +30,6 @@ img {
 
 @media screen and (min-width: 600px) {
     footer {
-        position: fixed;
-        min-height: 200px;
-        bottom: 0;
         width: 100%;
     }
 }
@@ -41,5 +38,36 @@ img {
     .imageHome, .homeGraphics {
         display: none !important;
     }
-
+    .badgeCurrentWeekResult, .badgeCurrentWeek, #canva-container-breakDown{
+        min-width: 75%;
     }
+    }
+
+canvas{
+    background-color: white;
+}
+
+.chartFullYear{
+    background-color: #f2f2f2;
+}
+
+.badgeCurrentWeekResult, .badgeCurrentWeek{
+    background-color: #f2f2f2;
+    min-height: 200px;
+    min-width: 350px;
+    max-width: 350px;
+    margin: auto;
+}
+#canva-container-fullYear{
+    min-height: 200px;
+    min-width: 350px;
+    max-width: 75%;
+    margin: auto;
+}
+
+#canva-container-breakDown{
+    min-height: 400px;
+    min-width: 350px;
+    max-width: 75%;
+    margin: auto;
+}
