@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Defect{% endblock %}
+
+{% block body %}
+    <h1>Defect</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ defect.id }}</td>
+            </tr>
+            <tr>
+                <th>Bin_number</th>
+                <td>{{ defect.binNumber }}</td>
+            </tr>
+            <tr>
+                <th>Item</th>
+                <td>{{ defect.item }}</td>
+            </tr>
+            <tr>
+                <th>Expected_quantity</th>
+                <td>{{ defect.expectedQuantity }}</td>
+            </tr>
+            <tr>
+                <th>Actual_quantity</th>
+                <td>{{ defect.actualQuantity }}</td>
+            </tr>
+            <tr>
+                <th>Comment</th>
+                <td>{{ defect.comment }}</td>
+            </tr>
+            <tr>
+                <th>Attachment_link</th>
+                <td>{{ defect.attachmentLink }}</td>
+            </tr>
+            <tr>
+                <th>IsInvestigated</th>
+                <td>{{ defect.isInvestigated ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_defect_index') }}">back to list</a>
+
+    <a href="{{ path('app_defect_edit', {'id': defect.id}) }}">edit</a>
+
+    {{ include('defect/_delete_form.html.twig') }}
+{% endblock %}

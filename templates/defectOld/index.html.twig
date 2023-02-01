@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Defect List
+{% endblock %}
+
+{% block body %}
+  <div class="container mt-3">
+    <h2>Latest Inventory Defects</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Year</th>
+          <th>Week</th>
+          <th>Inventory Location</th>
+          <th>Item</th>
+          <th>Expected Quantity</th>
+          <th>Expected Quantity</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for defect in defects %}
+          <tr>
+            <td>{{ defect.count.date | date("Y") }}</td>
+            <td>{{ defect.count.date | date("W") }}</td>
+            <td>{{defect.binNumber}}</td>
+            <td>{{defect.item}}</td>
+            <td>{{defect.expectedQuantity}}</td>
+            <td>{{defect.actualQuantity}}</td>
+            <td>
+            {% if defect.isInvestigated %}
+            Investigated
+            {% else %}
+            To investigate
+            {% endif %}
+            </td>
+            <td>
+            {% if defect.isInvestigated %}
+            <button>Re-Open</button>
+            {% else %}
+            <button>Investigate</button>
+            {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

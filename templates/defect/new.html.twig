@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Defect{% endblock %}
+
+{% block body %}
+    <h1>Create new Defect</h1>
+
+    {{ include('defect/_form.html.twig') }}
+
+    <a href="{{ path('app_defect_index') }}">back to list</a>
+{% endblock %}
