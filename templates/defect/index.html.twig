@@ -1,51 +1,40 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-  Defect List
+  Defect index
 {% endblock %}
 
 {% block body %}
-  <div class="container mt-3">
-    <h2>Latest Inventory Defects</h2>
-    <table class="table table-striped">
-      <thead>
+  <h1>Defect index</h1>
+  <a href="{{ path('app_defect_new') }}">Create new</a>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Bin_number</th>
+        <th>Item</th>
+        <th>IsInvestigated</th>
+        <th>actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for defect in defects %}
         <tr>
-          <th>Year</th>
-          <th>Week</th>
-          <th>Inventory Location</th>
-          <th>Item</th>
-          <th>Expected Quantity</th>
-          <th>Expected Quantity</th>
-          <th>Status</th>
-          <th>Action</th>
+          <td>{{ defect.id }}</td>
+          <td>{{ defect.binNumber }}</td>
+          <td>{{ defect.item }}</td>
+          <td>{{ defect.isInvestigated ? 'Yes' : 'No' }}</td>
+          <td>
+            <a href="{{ path('app_defect_show', { id: defect.id }) }}">show</a>
+            <a href="{{ path('app_defect_edit', { id: defect.id }) }}">edit</a>
+          </td>
         </tr>
-      </thead>
-      <tbody>
-        {% for defect in defects %}
-          <tr>
-            <td>{{ defect.count.date | date("Y") }}</td>
-            <td>{{ defect.count.date | date("W") }}</td>
-            <td>{{defect.binNumber}}</td>
-            <td>{{defect.item}}</td>
-            <td>{{defect.expectedQuantity}}</td>
-            <td>{{defect.actualQuantity}}</td>
-            <td>
-            {% if defect.isInvestigated %}
-            Investigated
-            {% else %}
-            To investigate
-            {% endif %}
-            </td>
-            <td>
-            {% if defect.isInvestigated %}
-            <button>Re-Open</button>
-            {% else %}
-            <button>Investigate</button>
-            {% endif %}
-            </td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+      {% else %}
+        <tr>
+          <td colspan="9">no records found</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% endblock %}
