@@ -5,13 +5,13 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link text-light" aria-current="page" href="#">Home</a>
+          <a class="nav-link text-light" aria-current="page" href="{{ path('app_home') }}">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-light" href="#">Dashboard</a>
+          <a class="nav-link text-light" href="{{ path('app_defect_monitor') }}">Dashboard</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-light">Defect Recording</a>
+          <a class="nav-link text-light" href="{{ path('app_defect_index') }}">Defect Recording</a>
         </li>
       </ul>
     </div>

@@ -2,16 +2,18 @@
 
 namespace App\Controller;
 
-use App\Repository\CountRepository;
-use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
-use Symfony\UX\Chartjs\Model\Chart;
+use DateTime;
 use App\Entity\Defect;
 use App\Form\DefectType;
+use App\Repository\CountRepository;
+use Symfony\UX\Chartjs\Model\Chart;
 use App\Repository\DefectRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\Date;
+use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/defect')]
 class DefectController extends AbstractController
@@ -20,8 +22,10 @@ class DefectController extends AbstractController
     public function monitor(ChartBuilderInterface $chartBuilder, DefectRepository $defectRepository, CountRepository $countRepository): Response
     {
         $numberDefectPerDate = $defectRepository->findDefectsPerCount();
+
         $col = array_column( $numberDefectPerDate, "date" );
         array_multisort( $col, SORT_ASC, $numberDefectPerDate );
+        $mondaylasteek = new DateTime('last Monday - 7 days');
 
         $numberDefectPerWeek = [];
         for ($i=0; $i < count($numberDefectPerDate); $i++) { 
@@ -31,7 +35,7 @@ class DefectController extends AbstractController
             $numberDefectPerWeek[$i]['defectNumber'] = $numberDefectPerDate[$i]['defectNumber'];
         }   
         // chart Full Year
-        $chartFullYear = $chartBuilder->createChart(Chart::TYPE_LINE);
+        $chartFullYear = $chartBuilder->createChart(Chart::TYPE_BAR);
         
         //avoir les labels par semaine
         for ($i=0; $i < count($numberDefectPerWeek); $i++) { 
@@ -61,18 +65,35 @@ class DefectController extends AbstractController
             ],
         ]);
 
+        $numberDefectPerReason = $defectRepository->findDefectsPerReason($mondaylasteek);
+        
         // chart BreakDown
-        $chartBreakDown = $chartBuilder->createChart(Chart::TYPE_LINE);
+        $chartBreakDown = $chartBuilder->createChart(Chart::TYPE_PIE);
         $lastWeekDefectReasons = [];
         $lastWeekDefectQuantityPerReason = [];
+        $numberDefectLastWeek = 0;
+        //avoir les labels par semaine
+        for ($i=0; $i < count($numberDefectPerReason); $i++) { 
+            $lastWeekDefectReasons[$i] = $numberDefectPerReason[$i]['reason'];
+            $lastWeekDefectQuantityPerReason[$i] = $numberDefectPerReason[$i]['defectNumber'];
+            $numberDefectLastWeek += $numberDefectPerReason[$i]['defectNumber'];
+        }
+
+
         $chartBreakDown->setData([
-            'labels' => ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            'labels' => $lastWeekDefectReasons,//['January', 'February', 'March', 'April', 'May', 'June', 'July'],
             'datasets' => [
                 [
                     'label' => 'DEFECTS PER REASON',
-                    'backgroundColor' => 'rgb(255, 99, 132)',
+                    'backgroundColor' => [
+                        "#DEB887",
+                        "#A9A9A9",
+                        "#DC143C",
+                        "#F4A460",
+                        "#2E8B57"
+                      ],
                     'borderColor' => 'rgb(255, 99, 132)',
-                    'data' => [0, 10, 5, 2, 20, 30, 45],
+                    'data' => $lastWeekDefectQuantityPerReason,//[0, 10, 5, 2, 20, 30, 45],
                 ],
             ],
         ]);
@@ -90,7 +111,8 @@ class DefectController extends AbstractController
         return $this->render('defect/monitor.html.twig', [
             'chartBreakDown' => $chartBreakDown,
             'chartFullYear' => $chartFullYear,
-            'defects' => $defectRepository->findAll(),            
+            'defects' => $defectRepository->findAll(),
+            'numberDefectLastWeek' => $numberDefectLastWeek,            
         ]);
     }
 

@@ -15,6 +15,7 @@
         <th>Bin_number</th>
         <th>Item</th>
         <th>IsInvestigated</th>
+        <th>Reason</th>
         <th>actions</th>
       </tr>
     </thead>
@@ -25,6 +26,7 @@
           <td>{{ defect.binNumber }}</td>
           <td>{{ defect.item }}</td>
           <td>{{ defect.isInvestigated ? 'Yes' : 'No' }}</td>
+          <td>{{ defect.reason.name }}</td>
           <td>
             <a href="{{ path('app_defect_show', { id: defect.id }) }}">show</a>
             <a href="{{ path('app_defect_edit', { id: defect.id }) }}">edit</a>

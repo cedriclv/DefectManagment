@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+use DateTime;
+use DateInterval;
 use App\Entity\Defect;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Defect>
@@ -22,6 +24,21 @@ class DefectRepository extends ServiceEntityRepository
             ->select('c.date, count(defect) AS defectNumber')
             ->leftJoin('defect.count', 'c')
             ->groupBy('c.date')
+            ->getQuery()
+            ->getResult();
+    }
+    public function findDefectsPerReason(DateTime $mondaylastWeek): array
+    {
+
+        return $this->createQueryBuilder('d')
+            ->select('r.name AS reason, count(d) AS defectNumber')
+            ->leftJoin('d.reason', 'r')
+            ->leftJoin('d.count', 'c')
+            ->andWhere('c.date >= :valmin')
+            ->andWhere('c.date >= :valmax')
+            ->setParameter('valmin', $mondaylastWeek)
+            ->setParameter('valmax', $mondaylastWeek->add(new DateInterval('P7D')))
+            ->groupBy('r.name')
             ->getQuery()
             ->getResult();
     }

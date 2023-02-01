@@ -39,6 +39,10 @@ class Defect
     #[ORM\Column]
     private ?bool $isInvestigated = null;
 
+    #[ORM\ManyToOne(inversedBy: 'defects')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Reason $reason = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -136,6 +140,18 @@ class Defect
     public function setIsInvestigated(bool $isInvestigated): self
     {
         $this->isInvestigated = $isInvestigated;
+
+        return $this;
+    }
+
+    public function getReason(): ?Reason
+    {
+        return $this->reason;
+    }
+
+    public function setReason(?Reason $reason): self
+    {
+        $this->reason = $reason;
 
         return $this;
     }

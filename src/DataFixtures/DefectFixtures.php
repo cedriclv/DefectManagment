@@ -5,8 +5,10 @@ namespace App\DataFixtures;
 use App\Entity\Defect;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class DefectFixtures extends Fixture
+class DefectFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -32,10 +34,16 @@ class DefectFixtures extends Fixture
                 $defect->setIsInvestigated(true);
             }
             $defect->setCount($this->getReference($randomCount));
+            $defect->setReason($this->getReference('reason_' . random_int(1, 6)));
             $manager->persist($defect);
 
         }
 
         $manager->flush();
     }
+    public function getDependencies(): array
+    {
+        return [ReasonFixtures::class];
+    }
 }
+
