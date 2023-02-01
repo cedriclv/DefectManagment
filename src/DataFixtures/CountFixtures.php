@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints\Date;
 class CountFixtures extends Fixture
 {
 
-    public const NB_COUNT = 52;
+    public const NB_COUNT = 5;
     public function load(ObjectManager $manager): void
     {
 
