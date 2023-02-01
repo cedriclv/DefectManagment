@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Count;
 use App\Entity\Defect;
+use App\Entity\Reason;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -22,6 +23,17 @@ class DefectType extends AbstractType
             ->add('attachment_link')
             ->add('isInvestigated')
             //->add('count')
+            ->add('REASON', EntityType::class, [
+                // looks for choices from this entity
+                'class' => Reason::class,
+            
+                // uses the User.username property as the visible option string
+                'choice_label' => 'name',
+            
+                // used to render a select box, check boxes or radios
+                // 'multiple' => true,
+                // 'expanded' => true,
+            ])
             ->add('count', EntityType::class, [
                 // looks for choices from this entity
                 'class' => Count::class,
