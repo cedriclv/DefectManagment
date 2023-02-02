@@ -1,6 +1,9 @@
 // customize some Bootstrap variables
 $primary: darken(#1270c2, 20%);
 
+h1{
+    padding:2rem;
+}
 // the ~ allows you to reference things in node_modules
 @import "~bootstrap/scss/bootstrap";
 
@@ -35,12 +38,13 @@ img {
 }
 
 @media screen and (max-width: 600px) {
-    .imageHome, .homeGraphics {
+    .imageHome, .homeGraphics,.hidden-mobile {
         display: none !important;
     }
-    .badgeCurrentWeekResult, .badgeCurrentWeek, #canva-container-breakDown{
-        min-width: 75%;
+    .badgeCurrentWeekResult, .badgeCurrentWeek{
+        width: 50%;
     }
+
     }
 
 canvas{
@@ -52,22 +56,47 @@ canvas{
 }
 
 .badgeCurrentWeekResult, .badgeCurrentWeek{
-    background-color: #f2f2f2;
-    min-height: 200px;
-    min-width: 350px;
+    min-height: 150px;
+ //   min-width: 350px;
     max-width: 350px;
     margin: auto;
 }
+
+.badgeCurrentWeek{
+    background-color: #bcbcbc;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.badgeCurrentWeekResult{
+    background-color: #e5e5e5;
+    font-size: 2rem;
+    font-weight: bolder;
+}
+.badgeContainer{
+    background-color: #f2f2f2;
+    min-height: 200px;
+    min-width: 350px;
+    max-width: 95%;
+    margin: auto;
+}
+
 #canva-container-fullYear{
     min-height: 200px;
     min-width: 350px;
-    max-width: 75%;
+    max-width: 95%;
     margin: auto;
 }
 
 #canva-container-breakDown{
     min-height: 400px;
     min-width: 350px;
-    max-width: 75%;
+    max-width: 95%;
     margin: auto;
+}
+#canva-container-fullYear{
+    max-height: 300px;
+}
+canvas, .badgeContainer{
+    border: #484848 3px solid;
 }
