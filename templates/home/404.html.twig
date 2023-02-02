@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Home
+{% endblock %}
+
+{% block body %}
+<h1>Acces not allowed you have to be with admin rights.</h1>
+  <div class="container text-center p-3">
+    <div class="row">
+      <div class="col-sm-6 m-0 my-2 homeBriefing card ">
+        <div class="card-body d-flex flex-column justify-content-evenly">
+          <div class="d-flex ">
+            <h2>Track and Investigate Defects</h2>
+            <h2 class="">Improve Customer Experience</h2>
+          </div>
+          <blockquote class="blockquote mb-0">
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quisquam esse, fuga illo eveniet obcaecati consequuntur magni aspernatur exLorem ipsum dolor sit, amet consectetur adipisicing elit. Quisquam esse, fuga illo eveniet obcaecati consequuntur magni aspernatur exLorem ipsum dolor sit, amet consectetur adipisicing elit. Quisquam esse, fuga illo eveniet obcaecati consequuntur magni aspernatur ex.</p>
+            <footer class="blockquote-footer">
+              Drake ok <cite title="Source Title">product designer</cite>
+            </footer>
+          </blockquote>
+        </div>
+      </div>
+      <div class="col-sm-5 m-0  my-2 p-0 homeGraphics card">
+        <img class="imageHome" src="{{ asset('build/images/greenGrowth2.png') }}" alt="Symfony" />
+      </div>
+    </div>
+  </div>
+{% endblock %}
