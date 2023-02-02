@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light">
   <div class="container-fluid">
     <a class="navbar-brand text-light" href="#">DEFECT MANAGEMENT TOOL</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+    <button id="buttonNavBar" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
@@ -18,13 +18,13 @@
         </li>
       </ul>
     </div>
-    <div>
+    <div class="text-light">
       {% if app.user %}
         {{ app.user.email }}
 
-        <a href="{{ path('app_logout') }}">Se déconnecter</a>
+        <a class="text-light" href="{{ path('app_logout') }}">Se déconnecter</a>
       {% else %}
-        <a href="{{ path('app_login') }}">Se connecter</a>
+        <a class="text-light href="{{ path('app_login') }}">Se connecter</a>
       {% endif %}
     </div>
   </div>
