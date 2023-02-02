@@ -100,3 +100,6 @@ canvas{
 canvas, .badgeContainer{
     border: #484848 3px solid;
 }
+#content {
+    min-height: 65vh; /*adjust to find the one that suits your content*/
+}
