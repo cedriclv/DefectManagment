@@ -23,57 +23,74 @@ class DefectController extends AbstractController
     {
         $numberDefectPerDate = $defectRepository->findDefectsPerCount();
 
-        $col = array_column( $numberDefectPerDate, "date" );
-        array_multisort( $col, SORT_ASC, $numberDefectPerDate );
+        $col = array_column($numberDefectPerDate, "date");
+        array_multisort($col, SORT_ASC, $numberDefectPerDate);
         $mondaylasteek = new DateTime('last Monday - 7 days');
 
         $numberDefectPerWeek = [];
-        for ($i=0; $i < count($numberDefectPerDate); $i++) { 
+        for ($i = 0; $i < count($numberDefectPerDate); $i++) {
             $numberDefectPerWeek[$i]['year'] = (int) $numberDefectPerDate[$i]['date']->format('Y');
             $numberDefectPerWeek[$i]['month'] = (int) $numberDefectPerDate[$i]['date']->format('m');
             $numberDefectPerWeek[$i]['week'] = (int) $numberDefectPerDate[$i]['date']->format('W');
             $numberDefectPerWeek[$i]['defectNumber'] = $numberDefectPerDate[$i]['defectNumber'];
-        }   
+        }
         // chart Full Year
         $chartFullYear = $chartBuilder->createChart(Chart::TYPE_BAR);
-        
+
         //avoir les labels par semaine
-        for ($i=0; $i < count($numberDefectPerWeek); $i++) { 
+        for ($i = 0; $i < count($numberDefectPerWeek); $i++) {
             $labelsFullYear[$i] = $numberDefectPerWeek[$i]['week'];
             $dataFullYear[$i] = $numberDefectPerWeek[$i]['defectNumber'];
         }
-//        dd($dataFullYear);
-        
+        //        dd($dataFullYear);
+
         $chartFullYear->setData([
             'labels' => $labelsFullYear,
             'datasets' => [
                 [
                     'label' => 'FULL YEAR RESULTS',
-                    'backgroundColor' => 'rgb(255, 99, 132)',
-                    'borderColor' => 'rgb(255, 99, 132)',
+                    'backgroundColor' => '#32ac71',
+                    'borderColor' => '#1d7634',
                     'data' => $dataFullYear,
                 ],
             ],
         ]);
 
         $chartFullYear->setOptions([
+            'plugins' => [
+                'title' => [
+                    'display' => true,
+                    'color' => '#484848',
+                    'text' => 'Defect per Weeks',
+                    'padding' => [
+                        'top' => 10,
+                        'bottom' => 30
+                    ],
+                    'font' => [
+                        'size' => 22,
+                    ]
+                ],
+                'legend' => 'false',
+            ],
+            'responsive' => true,
+            'maintainAspectRatio' => false,
             'scales' => [
                 'y' => [
-                    'suggestedMin' => 0,
-                    'suggestedMax' => 100,
+                    'suggestedMin' => 200,
+                    'suggestedMax' => 400,
                 ],
             ],
         ]);
 
         $numberDefectPerReason = $defectRepository->findDefectsPerReason($mondaylasteek);
-        
+
         // chart BreakDown
         $chartBreakDown = $chartBuilder->createChart(Chart::TYPE_PIE);
         $lastWeekDefectReasons = [];
         $lastWeekDefectQuantityPerReason = [];
         $numberDefectLastWeek = 0;
         //avoir les labels par semaine
-        for ($i=0; $i < count($numberDefectPerReason); $i++) { 
+        for ($i = 0; $i < count($numberDefectPerReason); $i++) {
             $lastWeekDefectReasons[$i] = $numberDefectPerReason[$i]['reason'];
             $lastWeekDefectQuantityPerReason[$i] = $numberDefectPerReason[$i]['defectNumber'];
             $numberDefectLastWeek += $numberDefectPerReason[$i]['defectNumber'];
@@ -81,29 +98,57 @@ class DefectController extends AbstractController
 
 
         $chartBreakDown->setData([
-            'labels' => $lastWeekDefectReasons,//['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            'labels' => $lastWeekDefectReasons,
+            //['January', 'February', 'March', 'April', 'May', 'June', 'July'],
             'datasets' => [
                 [
                     'label' => 'DEFECTS PER REASON',
                     'backgroundColor' => [
-                        "#DEB887",
-                        "#A9A9A9",
-                        "#DC143C",
-                        "#F4A460",
+                        "#0B8142",
+                        "#B2FF59",
+                        "#32AC71",
+                        "#AED580",
                         "#2E8B57"
-                      ],
-                    'borderColor' => 'rgb(255, 99, 132)',
-                    'data' => $lastWeekDefectQuantityPerReason,//[0, 10, 5, 2, 20, 30, 45],
+                    ],
+                    'borderColor' => '0B552B',
+                    'data' => $lastWeekDefectQuantityPerReason,
+                    //[0, 10, 5, 2, 20, 30, 45],
                 ],
             ],
         ]);
 
         $chartBreakDown->setOptions([
+            'plugins' => [
+                'title' => [
+                    'display' => true,
+                    'color' => '#484848',
+                    'text' => 'Defect Reasons',
+                    'padding' => [
+                        'top' => 10,
+                        'bottom' => 30
+                    ],
+                    'font' => [
+                        'size' => 22,
+                    ]
+                ],
+                'legend' => [
+                    'position' => 'bottom',
+                    'labels' => [
+                        'font' => [
+                            'size' => 14,
+                            'color' => 'black'
+                        ]
+                    ]
+                ],
+            ],
+            'responsive' => true,
+            'maintainAspectRatio' => false,
             'scales' => [
                 'y' => [
                     'suggestedMin' => 0,
                     'suggestedMax' => 100,
                 ],
+
             ],
         ]);
 
@@ -112,7 +157,7 @@ class DefectController extends AbstractController
             'chartBreakDown' => $chartBreakDown,
             'chartFullYear' => $chartFullYear,
             'defects' => $defectRepository->findAll(),
-            'numberDefectLastWeek' => $numberDefectLastWeek,            
+            'numberDefectLastWeek' => $numberDefectLastWeek,
         ]);
     }
 

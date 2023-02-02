@@ -22,7 +22,7 @@
     <tbody>
       {% for defect in defects %}
         <tr>
-          <td>{{ defect.id }}</td>
+          <td class="hidden-mobile">{{ defect.id }}</td>
           <td>{{ defect.binNumber }}</td>
           <td>{{ defect.item }}</td>
           <td>{{ defect.isInvestigated ? 'Yes' : 'No' }}</td>
