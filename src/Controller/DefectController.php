@@ -83,23 +83,25 @@ class DefectController extends AbstractController
         ]);
 
         $numberDefectPerReason = $defectRepository->findDefectsPerReason($mondaylasteek);
-
+        //dd($numberDefectPerReason);
         // chart BreakDown
         $chartBreakDown = $chartBuilder->createChart(Chart::TYPE_DOUGHNUT);
         $lastWeekDefectReasons = [];
         $lastWeekDefectQuantityPerReason = [];
         $numberDefectLastWeek = 0;
         //avoir les labels par semaine
+        $j = 0;
         for ($i = 0; $i < count($numberDefectPerReason); $i++) {
-            $lastWeekDefectReasons[$i] = $numberDefectPerReason[$i]['reason'];
-            $lastWeekDefectQuantityPerReason[$i] = $numberDefectPerReason[$i]['defectNumber'];
+            if ($numberDefectPerReason[$i]['isInvestigated'] === true) {
+                $lastWeekDefectReasons[$j] = $numberDefectPerReason[$i]['reason'];
+                $lastWeekDefectQuantityPerReason[$j] = $numberDefectPerReason[$i]['defectNumber'];
+                $j++;
+            }
             $numberDefectLastWeek += $numberDefectPerReason[$i]['defectNumber'];
         }
-
-
+        
         $chartBreakDown->setData([
             'labels' => $lastWeekDefectReasons,
-            //['January', 'February', 'March', 'April', 'May', 'June', 'July'],
             'datasets' => [
                 [
                     'label' => 'DEFECTS PER REASON',
@@ -112,7 +114,6 @@ class DefectController extends AbstractController
                     ],
                     'borderColor' => '0B552B',
                     'data' => $lastWeekDefectQuantityPerReason,
-                    //[0, 10, 5, 2, 20, 30, 45],
                 ],
             ],
         ]);

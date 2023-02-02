@@ -31,14 +31,15 @@ class DefectRepository extends ServiceEntityRepository
     {
 
         return $this->createQueryBuilder('d')
-            ->select('r.name AS reason, count(d) AS defectNumber')
+            ->select('r.name AS reason, count(d) AS defectNumber, d.isInvestigated AS isInvestigated ')
             ->leftJoin('d.reason', 'r')
             ->leftJoin('d.count', 'c')
+//            ->andWhere('d.isInvestigated = true')
             ->andWhere('c.date >= :valmin')
             ->andWhere('c.date >= :valmax')
             ->setParameter('valmin', $mondaylastWeek)
             ->setParameter('valmax', $mondaylastWeek->add(new DateInterval('P7D')))
-            ->groupBy('r.name')
+            ->groupBy('r.name, d.isInvestigated')
             ->getQuery()
             ->getResult();
     }
