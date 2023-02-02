@@ -85,7 +85,7 @@ class DefectController extends AbstractController
         $numberDefectPerReason = $defectRepository->findDefectsPerReason($mondaylasteek);
 
         // chart BreakDown
-        $chartBreakDown = $chartBuilder->createChart(Chart::TYPE_PIE);
+        $chartBreakDown = $chartBuilder->createChart(Chart::TYPE_DOUGHNUT);
         $lastWeekDefectReasons = [];
         $lastWeekDefectQuantityPerReason = [];
         $numberDefectLastWeek = 0;
@@ -144,9 +144,19 @@ class DefectController extends AbstractController
             'responsive' => true,
             'maintainAspectRatio' => false,
             'scales' => [
+                'x' => [
+                    'display' => false,
+                    'grid' => [
+                        'display' => false,
+                    ],
+                ],
                 'y' => [
+                    'display' => false,
                     'suggestedMin' => 0,
                     'suggestedMax' => 100,
+                    'grid' => [
+                        'display' => false,
+                    ],
                 ],
 
             ],
