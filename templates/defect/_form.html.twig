@@ -1,4 +1,17 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+
+<div class="container">
+    {{ form_start(form) }}
+        <div class="form-group my-2">{{ form_row(form.bin_number, {'attr':{'class':'form-control'}}) }}</div>
+        <div class="form-group my-2">{{ form_row(form.item, {'attr':{'class':'form-control'}}) }}</div>
+        <div class="form-group my-2">{{ form_row(form.isInvestigated, {'attr':{'class':'form-check'}}) }}</div>
+        <div class="form-group my-2">{{ form_row(form.REASON, {'attr':{'class':'form-control'}}) }}</div>
+        <div class="form-group my-2">{{ form_row(form.expected_quantity, {'attr':{'class':'form-control'}}) }}</div>
+        <div class="form-group my-2">{{ form_row(form.actual_quantity, {'attr':{'class':'form-control'}}) }}</div>
+        <div class="form-group my-2">{{ form_row(form.comment, {'attr':{'class':'form-control'}}) }}</div>
+        <div class="form-group my-2">{{ form_row(form.attachment_link, {'attr':{'class':'form-control'}}) }}</div>
+        <div class="form-group my-2">{{ form_row(form.count, {'attr':{'class':'form-control'}}) }}</div>
+
+        <button class="btn btn-primary p-2 my-2">{{ button_label|default('Save') }}</button>
+
+    {{ form_end(form) }}
+</div>
