@@ -70,12 +70,26 @@ class DefectController extends AbstractController
                         'size' => 22,
                     ]
                 ],
-                'legend' => 'false',
+                'legend' => [
+                    'display' => false,
+                ],
             ],
             'responsive' => true,
             'maintainAspectRatio' => false,
             'scales' => [
+                'x' => [
+                    'ticks' => [
+                        'font' => [
+                            'size' => 20,
+                        ]
+                        ],
+                ],
                 'y' => [
+                    'ticks' => [
+                        'font' => [
+                            'size' => 20,
+                        ]
+                        ],
                     'suggestedMin' => 200,
                     'suggestedMax' => 400,
                 ],
@@ -133,6 +147,7 @@ class DefectController extends AbstractController
                     ]
                 ],
                 'legend' => [
+                    'align' => 'start',
                     'position' => 'bottom',
                     'labels' => [
                         'font' => [
