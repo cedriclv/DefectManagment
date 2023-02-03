@@ -7,6 +7,9 @@ h1{
 // the ~ allows you to reference things in node_modules
 @import "~bootstrap/scss/bootstrap";
 
+footer{
+    padding: 1rem;;
+}
 .navbar {
     background-color: #484848;
 }
@@ -107,3 +110,33 @@ canvas, .badgeContainer{
 #buttonNavBar{
     background-color: #e5e5e5;
 }
+
+ /* Style all font awesome icons */
+ .fa {
+    padding: 10px;
+    font-size: 15px;
+    width: 25px;
+    text-align: center;
+    text-decoration: none;
+  }
+  
+  /* Add a hover effect if you want */
+  .fa:hover {
+    opacity: 0.7;
+  }
+  
+  /* Set a specific color for each brand */
+  
+  /* Facebook */
+  .fa-facebook {
+    background: #6c757d;
+    color: white;
+    border-radius: 2px;
+  }
+  
+  /* Twitter */
+  .fa-linkedin {
+    background: #6c757d;
+    color: white;
+    border-radius: 2px;
+  } 
