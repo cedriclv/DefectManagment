@@ -7,12 +7,11 @@
 {% block body %}
   <h1>Defect Dashboard</h1>
 
-  <div class="row justify-content-center">
-
+  <div class="hidden-desktop row justify-content-center">
     <div class="col-sm-12 col-lg-4 m-2 d-flex justify-content-center align-items-center">
       <div class="badgeContainer row d-flex justify-content-center align-items-center">
         <div class="col m-2 badgeCurrentWeek d-flex justify-content-center align-items-center text-center">LAST WEEK DEFECTS</div>
-        <div class="col m-2 badgeCurrentWeek d-flex justify-content-center align-items-center text-center">{{numberDefectLastWeek}}</div>
+        <div class="col m-2 badgeCurrentWeek d-flex justify-content-center align-items-center text-center">{{ numberDefectLastWeek }}</div>
       </div>
     </div>
 
@@ -26,32 +25,15 @@
       <div class="hidden-mobile" id="canva-container-fullYear">{{ render_chart(chartFullYear) }}</div>
     </div>
   </div>
+
   <script>
-
-  const pieGeneratedLabelsLegend = Chart;
-  console.log(pieGeneratedLabelsLegend);
+    document.querySelector('#canva-container-fullYear > canvas').style.display = 'inline'
+    const timer = 1
+    setTimeout(function () {
+      if ((timer = 1)) {
+        window.location.reload()
+        timer = 0
+      }
+    }, 500)
   </script>
-  {# <div class="row justify-content-center">
-
-    <div class="col-4 m-2">
-      <div class="badgeContainer row d-flex justify-content-center align-items-center">
-        <div class="col m-2 badgeCurrentWeek d-flex justify-content-center align-items-center text-center">LAST WEEK DEFECTS</div>
-        <div class="col m-2 badgeCurrentWeekResult d-flex justify-content-center align-items-center text-center">{{numberDefectLastWeek}}</div>
-      </div>
-    </div>
-
-    <div class="col-4 m-2">
-      <div id="canva-container-breakDown">{{ render_chart(chartBreakDown) }}</div>
-    </div>
-  </div>
-
-  <div class="row p-2">
-    <div class="col-12">
-      <div id="canva-container-fullYear">{{ render_chart(chartFullYear) }}</div>
-    </div>
-  </div> #}
-
-
-
-
 {% endblock %}

@@ -20,10 +20,11 @@ class DefectRepository extends ServiceEntityRepository
 {
     public function findDefectsPerCount(): array
     {
-        return $this->createQueryBuilder('defect')
-            ->select('c.date, count(defect) AS defectNumber')
-            ->leftJoin('defect.count', 'c')
-            ->groupBy('c.date')
+        return $this->createQueryBuilder('d')
+            ->select('c.date, r.name AS reason, count(d) AS defectNumber')
+            ->leftJoin('d.count', 'c')
+            ->leftJoin('d.reason', 'r')
+            ->groupBy('c.date','r.name')
             ->getQuery()
             ->getResult();
     }
