@@ -1,15 +1,18 @@
 // customize some Bootstrap variables
 $primary: darken(#1270c2, 20%);
 
-h1{
-    padding:2rem;
+h1 {
+    padding: 2rem;
 }
+
 // the ~ allows you to reference things in node_modules
 @import "~bootstrap/scss/bootstrap";
 
-footer{
-    padding: 1rem;;
+footer {
+    padding: 1rem;
+    ;
 }
+
 .navbar {
     background-color: #484848;
 }
@@ -39,46 +42,59 @@ img {
         width: 100%;
     }
 }
-.hidden-desktop{
+
+.hidden-desktop {
     display: none !important;
 }
+
 @media screen and (max-width: 600px) {
-    .imageHome, .homeGraphics,.hidden-mobile {
+
+    .imageHome,
+    .homeGraphics,
+    .hidden-mobile {
         display: none !important;
     }
-    .badgeCurrentWeekResult, .badgeCurrentWeek{
+
+    .badgeCurrentWeekResult,
+    .badgeCurrentWeek {
         width: 50%;
     }
 
+    .hidden-desktop {
+        display: initial !important;
     }
 
-canvas{
+}
+
+canvas {
     background-color: white;
 }
 
-.chartFullYear{
+.chartFullYear {
     background-color: #f2f2f2;
 }
 
-.badgeCurrentWeekResult, .badgeCurrentWeek{
+.badgeCurrentWeekResult,
+.badgeCurrentWeek {
     min-height: 150px;
- //   min-width: 350px;
+    //   min-width: 350px;
     max-width: 350px;
     margin: auto;
 }
 
-.badgeCurrentWeek{
+.badgeCurrentWeek {
     background-color: #bcbcbc;
     font-size: 2rem;
     font-weight: bold;
 }
 
-.badgeCurrentWeekResult{
+.badgeCurrentWeekResult {
     background-color: #e5e5e5;
     font-size: 2rem;
     font-weight: bolder;
 }
-.badgeContainer{
+
+.badgeContainer {
     background-color: #f2f2f2;
     min-height: 200px;
     min-width: 350px;
@@ -86,63 +102,68 @@ canvas{
     margin: auto;
 }
 
-#canva-container-fullYear{
+#canva-container-fullYear {
     min-width: 350px;
     max-width: 95%;
     margin: auto;
 }
 
-#canva-container-breakDown{
+#canva-container-breakDown {
     min-height: 500px;
     min-width: 350px;
     max-width: 95%;
     margin: auto;
 }
-#canva-container-fullYear{
-    max-height: 600px;  
-}
-#canva-container-fullYear > canvas {
-    display:inline;
-  }
 
-canvas, .badgeContainer{
+#canva-container-fullYear {
+    max-height: 600px;
+}
+
+#canva-container-fullYear>canvas {
+    display: inline;
+}
+
+canvas,
+.badgeContainer {
     border: #484848 3px solid;
 
 }
+
 #content {
-    min-height: 65vh; /*adjust to find the one that suits your content*/
+    min-height: 65vh;
+    /*adjust to find the one that suits your content*/
 }
 
-#buttonNavBar{
+#buttonNavBar {
     background-color: #e5e5e5;
 }
 
- /* Style all font awesome icons */
- .fa {
+/* Style all font awesome icons */
+.fa {
     padding: 10px;
     font-size: 15px;
     width: 25px;
     text-align: center;
     text-decoration: none;
-  }
-  
-  /* Add a hover effect if you want */
-  .fa:hover {
+}
+
+/* Add a hover effect if you want */
+.fa:hover {
     opacity: 0.7;
-  }
-  
-  /* Set a specific color for each brand */
-  
-  /* Facebook */
-  .fa-facebook {
+}
+
+/* Set a specific color for each brand */
+
+/* Facebook */
+.fa-facebook {
     background: #6c757d;
     color: white;
     border-radius: 2px;
-  }
-  
-  /* Twitter */
-  .fa-linkedin {
+}
+
+/* Twitter */
+.fa-linkedin {
     background: #6c757d;
     color: white;
     border-radius: 2px;
-  } 
+}
