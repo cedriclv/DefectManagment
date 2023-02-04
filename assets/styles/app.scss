@@ -39,7 +39,9 @@ img {
         width: 100%;
     }
 }
-
+.hidden-desktop{
+    display: none !important;
+}
 @media screen and (max-width: 600px) {
     .imageHome, .homeGraphics,.hidden-mobile {
         display: none !important;
@@ -85,7 +87,6 @@ canvas{
 }
 
 #canva-container-fullYear{
-    min-height: 200px;
     min-width: 350px;
     max-width: 95%;
     margin: auto;
@@ -98,10 +99,15 @@ canvas{
     margin: auto;
 }
 #canva-container-fullYear{
-    max-height: 300px;
+    max-height: 600px;  
 }
+#canva-container-fullYear > canvas {
+    display:inline;
+  }
+
 canvas, .badgeContainer{
     border: #484848 3px solid;
+
 }
 #content {
     min-height: 65vh; /*adjust to find the one that suits your content*/

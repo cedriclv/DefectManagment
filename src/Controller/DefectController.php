@@ -21,39 +21,76 @@ class DefectController extends AbstractController
     #[Route('/monitor', name: 'app_defect_monitor', methods: ['GET'])]
     public function monitor(ChartBuilderInterface $chartBuilder, DefectRepository $defectRepository, CountRepository $countRepository): Response
     {
-        $numberDefectPerDate = $defectRepository->findDefectsPerCount();
+        $numberDefectPerDateReason = $defectRepository->findDefectsPerCount();
+        //dd($numberDefectPerDateReason);
 
-        $col = array_column($numberDefectPerDate, "date");
-        array_multisort($col, SORT_ASC, $numberDefectPerDate);
+        $col = array_column($numberDefectPerDateReason, "date");
+        array_multisort($col, SORT_ASC, $numberDefectPerDateReason);
         $mondaylasteek = new DateTime('last Monday - 7 days');
 
         $numberDefectPerWeek = [];
-        for ($i = 0; $i < count($numberDefectPerDate); $i++) {
-            $numberDefectPerWeek[$i]['year'] = (int) $numberDefectPerDate[$i]['date']->format('Y');
-            $numberDefectPerWeek[$i]['month'] = (int) $numberDefectPerDate[$i]['date']->format('m');
-            $numberDefectPerWeek[$i]['week'] = (int) $numberDefectPerDate[$i]['date']->format('W');
-            $numberDefectPerWeek[$i]['defectNumber'] = $numberDefectPerDate[$i]['defectNumber'];
+
+        //get all reasons
+        //get teh tab will all reasons and remove duplicate
+        $reasons = [];
+        for ($i = 0; $i < count($numberDefectPerDateReason); $i++) {
+            $reasons[] = $numberDefectPerDateReason[$i]['reason'];
         }
+        $reasons = array_unique($reasons);
+
+        //get all dates
+        //get teh tab will all dates and remove duplicate
+        $weeks = [];
+        for ($i = 0; $i < count($numberDefectPerDateReason); $i++) {
+            $week = (int) $numberDefectPerDateReason[$i]['date']->format('W');
+            if (!in_array($week, $weeks)) {
+                $weeks[] = $week;
+            }
+        }
+        $weeks = array_unique($weeks);
+        // creer les datasets vierges            
+        $datas = []; //[$reasons1, $reasons2, $reasons3, $reasons4, $reasons5, $reasons6];
+        //for each reasons get the dataset defect per week
+        //dd($numberDefectPerDateReason);
+        for ($j = 0; $j < count($reasons); $j++) {
+            for ($i = 0; $i < count($numberDefectPerDateReason); $i++) {
+                if ($numberDefectPerDateReason[$i]['reason'] === $reasons[$j]) {
+                    $datas[$j][] = $numberDefectPerDateReason[$i]['defectNumber'];
+                }
+            }
+        }
+        $colors = ['red', 'blue', 'violet', 'green', 'yellow', 'grey', 'cyan'];
         // chart Full Year
-        $chartFullYear = $chartBuilder->createChart(Chart::TYPE_BAR);
-
-        //avoir les labels par semaine
-        for ($i = 0; $i < count($numberDefectPerWeek); $i++) {
-            $labelsFullYear[$i] = $numberDefectPerWeek[$i]['week'];
-            $dataFullYear[$i] = $numberDefectPerWeek[$i]['defectNumber'];
-        }
-        //        dd($dataFullYear);
-
-        $chartFullYear->setData([
-            'labels' => $labelsFullYear,
-            'datasets' => [
-                [
-                    'label' => 'FULL YEAR RESULTS',
-                    'backgroundColor' => '#32ac71',
-                    'borderColor' => '#1d7634',
-                    'data' => $dataFullYear,
-                ],
+        $chartFullYear = $chartBuilder->createChart(Chart::TYPE_LINE);
+        $datasets = [];
+        for ($i=0; $i < count($reasons); $i++) {
+            $datasets[] = [
+                'label' => $reasons[$i],
+                'backgroundColor' => $colors[$i],
+                'borderColor' => 'lightgrey',
+                'data' => $datas[$i],
+                'fill' => true,
+            ];
+        }    
+/*        $datasets = [
+            [
+                'label' => $reasons[0],
+                'backgroundColor' => $colors[0],
+                'borderColor' => '#1d7634',
+                'data' => $datas[0],
+                'fill' => true,
             ],
+            [
+                'label' => $reasons[1],
+                'backgroundColor' => $colors[1],
+                'borderColor' => '#b1ff57',
+                'data' => $datas[1],
+                'fill' => true,
+            ],
+        ];
+  */      $chartFullYear->setData([
+            'labels' => $weeks,
+            'datasets' => $datasets,
         ]);
 
         $chartFullYear->setOptions([
@@ -71,25 +108,27 @@ class DefectController extends AbstractController
                     ]
                 ],
                 'legend' => [
-                    'display' => false,
+                    'display' => true,
                 ],
             ],
             'responsive' => true,
             'maintainAspectRatio' => false,
             'scales' => [
                 'x' => [
+                    'stacked' => true,
                     'ticks' => [
                         'font' => [
                             'size' => 20,
                         ]
-                        ],
+                    ],
                 ],
                 'y' => [
+                    'stacked' => true,
                     'ticks' => [
                         'font' => [
                             'size' => 20,
                         ]
-                        ],
+                    ],
                     'suggestedMin' => 200,
                     'suggestedMax' => 400,
                 ],
@@ -113,7 +152,7 @@ class DefectController extends AbstractController
             }
             $numberDefectLastWeek += $numberDefectPerReason[$i]['defectNumber'];
         }
-        
+
         $chartBreakDown->setData([
             'labels' => $lastWeekDefectReasons,
             'datasets' => [
