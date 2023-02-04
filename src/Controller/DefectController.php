@@ -36,8 +36,8 @@ class DefectController extends AbstractController
         for ($i = 0; $i < count($numberDefectPerDateReason); $i++) {
             $reasons[] = $numberDefectPerDateReason[$i]['reason'];
         }
-        $reasons = array_unique($reasons);
-
+        $reasons = array_values(array_unique($reasons));
+       // dd($reasons);
         //get all dates
         //get teh tab will all dates and remove duplicate
         $weeks = [];
@@ -51,7 +51,6 @@ class DefectController extends AbstractController
         // creer les datasets vierges            
         $datas = []; //[$reasons1, $reasons2, $reasons3, $reasons4, $reasons5, $reasons6];
         //for each reasons get the dataset defect per week
-        //dd($numberDefectPerDateReason);
         for ($j = 0; $j < count($reasons); $j++) {
             for ($i = 0; $i < count($numberDefectPerDateReason); $i++) {
                 if ($numberDefectPerDateReason[$i]['reason'] === $reasons[$j]) {
