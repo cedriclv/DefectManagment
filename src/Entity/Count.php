@@ -73,4 +73,8 @@ class Count
 
         return $this;
     }
+    public function __toString(): string
+    {
+        return $this->date->format('Y-m-d H:i:s');
+    }    
 }
