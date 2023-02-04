@@ -58,7 +58,7 @@ class DefectController extends AbstractController
                 }
             }
         }
-        $colors = ['red', 'blue', 'violet', 'green', 'yellow', 'grey', 'cyan'];
+        $colors = ['#27b89b ', '#484848', 'violet', 'green', 'yellow', 'grey', 'cyan'];
         // chart Full Year
         $chartFullYear = $chartBuilder->createChart(Chart::TYPE_LINE);
         $datasets = [];
